@@ -1,0 +1,25 @@
+int minimumRecolors(char* blocks, int k) {
+    int count = 0;
+    int max = 0;
+    for(int i=0;i<k;i++){
+        if(blocks[i]=='B'){
+            count++;
+        }
+    }
+    if(max<count){
+        max = count;
+    }
+    int n = strlen(blocks);
+    for(int i=0;i<n-k;i++){
+        if(blocks[i]=='B'){
+            count--;
+        }
+        if(blocks[i+k]=='B'){
+            count++;
+        }
+        if(max<count){
+            max = count;
+        }
+    }
+    return k-max;
+}
