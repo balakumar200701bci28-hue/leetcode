@@ -1,0 +1,36 @@
+int longestSubstring(char* s, int k) {
+  if (k <= 1) return strlen(s);
+  int charCount[26] = {0};
+  int totalUniqCount = 0;
+  for (int i = 0; s[i] != '\0'; i++) {
+    if (charCount[s[i] - 'a'] == 0) totalUniqCount++;
+    charCount[s[i] - 'a']++;
+  } 
+
+  int longest = 0;
+
+  for (int targetUniqCount = 1; targetUniqCount <= totalUniqCount; targetUniqCount++) {
+    memset(charCount, 0, sizeof(charCount)); // reset
+    int left = 0, uniqCount = 0,  uniqK = 0;
+
+    for (int right = 0; s[right] != '\0'; right++) {
+        if (charCount[s[right] - 'a'] == 0) 
+            uniqCount++;
+            charCount[s[right] - 'a']++;
+
+            if(charCount[s[right] - 'a'] == k) uniqK++;
+
+            while(uniqCount > targetUniqCount) { // shrink the window
+                if(charCount[s[left] - 'a'] == k) uniqK--;
+                charCount[s[left] - 'a']--;
+                if(charCount[s[left] - 'a'] == 0) uniqCount--;
+                left++;
+            }
+            if(uniqK == uniqCount) {
+                if(right - left + 1 > longest)
+                longest = right - left + 1;
+            }
+        }
+    }
+    return longest;
+}
