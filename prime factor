@@ -1,0 +1,39 @@
+void factorsss(int nm, int xx[], int *cnmt){
+    *cnmt=0;
+    for(int i=2; i*i<=nm; i++){
+        if(nm%i==0){
+            xx[(*cnmt)++]=i;
+            while(nm%i==0)
+                nm/=i;
+        }
+    }
+    if(nm>1)
+        xx[(*cnmt)++]=nm;
+}
+int longestSubarray(int* nums, int numsSize, int k) {
+    int Frequncy[100001]={0};
+    int left_Side=0;
+    int Distinctsss=0;
+    int final_answer=0;
+    for(int right_Side=0; right_Side<numsSize; right_Side++){
+        int factorzz[20], cnmt;
+        factorsss(nums[right_Side], factorzz, &cnmt);
+        for(int i=0; i<cnmt; i++){
+            if(Frequncy[factorzz[i]]==0)
+                Distinctsss++;
+            Frequncy[factorzz[i]]++;
+        }
+        while(Distinctsss>k){
+            factorsss(nums[left_Side], factorzz, &cnmt);
+            for(int i=0; i<cnmt; i++){
+                Frequncy[factorzz[i]]--;
+                if(Frequncy[factorzz[i]]==0)
+                    Distinctsss--;
+            }
+            left_Side++;
+        }
+        if(right_Side-left_Side+1>final_answer)
+            final_answer=right_Side-left_Side+1;
+    }
+    return final_answer;
+}
