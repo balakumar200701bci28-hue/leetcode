@@ -1,0 +1,31 @@
+int countGoodRotations(int* nums, int numsSize) 
+{
+    long long lSum = 0, rSum = 0;
+
+    int count = 0;
+
+    for(int i = 0; i < numsSize / 2; i++ )
+    {
+        lSum += nums[i];
+        rSum += nums[ numsSize / 2 + i];
+    }
+
+    if( lSum > rSum ) count++;
+    
+    int idx = 1;
+
+    while( idx < numsSize )
+    {   
+        lSum += nums[ ( ( numsSize / 2 ) + idx - 1 ) % numsSize];
+        lSum -= nums[idx - 1];
+        rSum += nums[idx - 1];
+        rSum -= nums[ ( ( numsSize / 2 ) + idx - 1 ) % numsSize];
+
+        idx++;
+
+        if( lSum > rSum ) count++;
+    }
+
+    return count;
+    
+}
