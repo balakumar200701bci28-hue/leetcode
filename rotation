@@ -1,0 +1,58 @@
+class Solution {
+public:
+    int countRotations(string s, int k) {
+        /*
+        Intuition
+
+        Instead of generating all cyclic rotation we can look at how the no. of equal adjacent characters changes when we rotate the string
+
+        1) We count the equal adjacent pairs in the original string, including the circular pair between the last and first characters.. Let's call this total
+
+        2) When we rotate the string only the boundary between the two parts changes.. So the score can only be total or total-1
+
+        That's means we don't actually need to generate all cyclic rotations....
+        */
+
+        /*
+        Approach -
+
+        1) We count the equal adjacent pairs in the original string
+        
+        2) the circular pair between the last and first characters as a separate
+
+        Now , if k is equal to total, there are n-total rotations with that score...
+
+        If k is equal to total -1 there are total rotations..
+
+        otherwise the answer is zero..
+        */
+
+        /*
+        aab => 1
+
+        3-1 = 2
+        aba
+
+        */
+
+        /*
+        abca => 1
+
+        k = total - 1
+        total
+        */
+
+        int n = s.size();
+        int total = 0;
+
+        for(int i=0;i<n-1;i++){
+            if(s[i]==s[i+1]) total++;
+        }
+
+        if(s[0] == s[n-1]) total++;
+
+        if(k==total) return n-total;
+
+        return k==total-1 ? total : 0;
+    }
+};
