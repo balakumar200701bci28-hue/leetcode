@@ -1,0 +1,26 @@
+int minInsertions(char *s) {
+    int insertions = 0;
+    int right_needed = 0;
+
+    while (*s != '\0') {
+        if (*s == '(') {
+            if (right_needed % 2 != 0) {
+                insertions++;
+                right_needed--;
+            }
+
+            right_needed += 2;
+        } else {
+            right_needed--;
+
+            if (right_needed < 0) {
+                insertions++;
+                right_needed += 2;
+            }
+        }
+
+        s++;
+    }
+
+    return insertions + right_needed;
+}
